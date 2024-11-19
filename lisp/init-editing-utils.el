@@ -10,7 +10,7 @@
 
 (maybe-require-package 'list-unicode-display)
 
-
+
 ;;; Some basic preferences
 
 (setq-default
@@ -33,6 +33,8 @@
  truncate-lines nil
  truncate-partial-width-windows nil)
 
+
+
 (add-hook 'after-init-hook 'delete-selection-mode)
 
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -44,7 +46,6 @@
 (add-hook 'after-init-hook 'transient-mark-mode)
 
 
-
 ;; Huge files
 
 (when (fboundp 'so-long-enable)
@@ -60,13 +61,12 @@
       (error "File does not exist: %s" file))
     (vlf file)))
 
-
 ;;; A simple visible bell which works in all terminal types
 (require-package 'mode-line-bell)
 (add-hook 'after-init-hook 'mode-line-bell-mode)
 
 
-
+
 ;;; Newline behaviour (see also electric-indent-mode, enabled above)
 
 (defun sanityinc/newline-at-end-of-line ()
@@ -77,7 +77,7 @@
 
 (global-set-key (kbd "S-<return>") 'sanityinc/newline-at-end-of-line)
 
-
+
 
 (with-eval-after-load 'subword
   (diminish 'subword-mode))
@@ -90,19 +90,19 @@
   (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
   (add-hook 'yaml-ts-mode-hook 'display-line-numbers-mode))
 
-
+
 
 (when (boundp 'display-fill-column-indicator)
   (setq-default indicate-buffer-boundaries 'left)
   (setq-default display-fill-column-indicator-character ?┊)
   (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode))
 
-
+
 
 (when (require-package 'rainbow-delimiters)
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-
+
 (when (maybe-require-package 'symbol-overlay)
   (dolist (hook '(prog-mode-hook html-mode-hook yaml-mode-hook conf-mode-hook))
     (add-hook hook 'symbol-overlay-mode))
@@ -113,12 +113,11 @@
     (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
     (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev)))
 
-
+
 ;;; Zap *up* to char is a handy pair for zap-to-char
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
 
 
-
 (require-package 'browse-kill-ring)
 (setq browse-kill-ring-separator "\f")
 (global-set-key (kbd "M-Y") 'browse-kill-ring)
@@ -145,7 +144,7 @@
 (when (fboundp 'repeat-mode)
   (add-hook 'after-init-hook 'repeat-mode))
 
-
+
 ;;; Handy key bindings
 
 (with-eval-after-load 'help
@@ -178,7 +177,7 @@
 (global-set-key (kbd "C-M-<backspace>") 'kill-back-to-indentation)
 
 
-
+
 ;;; Page break lines
 
 (when (maybe-require-package 'page-break-lines)
@@ -187,7 +186,7 @@
     (diminish 'page-break-lines-mode)))
 
 
-
+
 ;; Shift lines up and down with M-up and M-down. When paredit is enabled,
 ;; it will use those keybindings. For this reason, you might prefer to
 ;; use M-S-up and M-S-down, which will work even in lisp modes.
@@ -214,7 +213,7 @@
 (global-set-key [remap backward-up-list] 'sanityinc/backward-up-sexp) ; C-M-u, C-M-up
 
 
-
+
 ;;; Cut/copy the current line if no region is active
 (require-package 'whole-line-or-region)
 (add-hook 'after-init-hook 'whole-line-or-region-global-mode)
@@ -240,19 +239,19 @@
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
 
-
+
 
 (require-package 'highlight-escape-sequences)
 (add-hook 'after-init-hook 'hes-mode)
 
-
+
 (require-package 'which-key)
 (add-hook 'after-init-hook 'which-key-mode)
 (setq-default which-key-idle-delay 1.5)
 (with-eval-after-load 'which-key
   (diminish 'which-key-mode))
 
-
+
 (defun sanityinc/disable-features-during-macro-call (orig &rest args)
   "When running a macro, disable features that might be expensive.
 ORIG is the advised function, which is called with its ARGS."
@@ -262,6 +261,23 @@ ORIG is the advised function, which is called with its ARGS."
     (apply orig args)))
 
 (advice-add 'kmacro-call-macro :around 'sanityinc/disable-features-during-macro-call)
+
+
+(global-hl-line-mode t)             ;;高亮当前行
+(global-font-lock-mode t)        ;;进行语法加亮
+(delete-selection-mode 1)           ;;删除和替换选中部分
+;;(global-linum-mode t)                ;;全局开启行号,emacs29 开始废弃
+;(column-number-mode t)   ; 在 Mode line 上显示列号,在新版中废弃
+;;(global-display-line-numbers-mode 1)         ; 在 Window 显示行号
+(electric-indent-mode t)             ;;回车自动缩进
+(delete-selection-mode t)            ;;开启选中替换，选中删除
+;;(global-hungry-delete-mode t)    ;;选中部分删除
+(global-auto-revert-mode t)      ;;自动加载外部修改过的文件
+
+(setq-default cursor-type 'bar)        ;;修改光标形状
+
+(setq ring-bell-function 'ignore)      ;; Turn off sound alarms completely
+(fset 'yes-or-no-p 'y-or-n-p)
 
 
 (provide 'init-editing-utils)

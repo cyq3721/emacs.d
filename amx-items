@@ -1,0 +1,17 @@
+
+;; ----- amx-history -----
+(
+ recentf
+ eval-buffer
+ cd
+ 5x5
+ amx
+ arp
+ dbx
+)
+
+;; ----- amx-data -----
+(
+ (recentf . 21)
+ (eval-buffer . 2)
+)

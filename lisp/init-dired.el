@@ -26,5 +26,10 @@
   (with-eval-after-load 'dired
     (add-hook 'dired-mode-hook 'diff-hl-dired-mode)))
 
+;;让 dired 可以递归的拷贝和删除目录
+(setq dired-recursive-copies 'top)
+(setq dired-recursive-deletes 'top)
+
+
 (provide 'init-dired)
 ;;; init-dired.el ends here

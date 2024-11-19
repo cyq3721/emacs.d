@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-
 ;; Stop C-z from minimizing windows under OS X
 
 (defun sanityinc/maybe-suspend-frame ()
@@ -13,15 +12,14 @@
 (global-set-key (kbd "C-z") 'sanityinc/maybe-suspend-frame)
 
 
-
 ;; Suppress GUI features
 
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t)   ;;取消启动画面
 
 
-
+
 ;; Window size and features
 
 (setq-default
@@ -29,11 +27,11 @@
  frame-resize-pixelwise t)
 
 (when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
+  (tool-bar-mode -1))   ;;隐藏工具栏
 (when (fboundp 'set-scroll-bar-mode)
-  (set-scroll-bar-mode nil))
+  (set-scroll-bar-mode t))
 
-(menu-bar-mode -1)
+;(menu-bar-mode -1)   ;;隐藏菜单栏
 
 (let ((no-border '(internal-border-width . 0)))
   (add-to-list 'default-frame-alist no-border)
@@ -78,17 +76,17 @@
           (lambda ()
             (setq line-spacing 0)))
 
-
+
 ;; Change global font size easily
 
 (require-package 'default-text-scale)
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
 
-
+
 (require-package 'disable-mouse)
 
-
+
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode))
 
