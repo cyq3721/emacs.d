@@ -1,17 +1,18 @@
 
 ;; ----- amx-history -----
 (
+ html-mode
  recentf
  eval-buffer
  cd
  5x5
  amx
  arp
- dbx
 )
 
 ;; ----- amx-data -----
 (
- (recentf . 21)
+ (recentf . 40)
  (eval-buffer . 2)
+ (html-mode . 2)
 )

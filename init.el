@@ -71,4 +71,5 @@
 (require 'init-dired)
 (require 'init-find)
 (require 'init-html)
+(require 'init-company)
 ;;; init.el ends here
